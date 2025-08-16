@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Библия — Читалка</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <header>
+    <div class="left">
+      <select id="bookSelect" aria-label="Выбор книги"></select>
+      <select id="chapterSelect" aria-label="Выбор главы"></select>
+    </div>
+    <div class="right">
+      <button id="toggleTheme" title="Переключить тему">🌓</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="text" role="main" aria-live="polite"></div>
+  </main>
+
+  <footer>
+    <button id="prevChapter" class="nav">← Предыдущая</button>
+    <button id="nextChapter" class="nav">Следующая →</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
