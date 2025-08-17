@@ -39,7 +39,7 @@ fetch("bible.json")
   .then(data => {
     bibleData = data;
     loadBooks();
-    // Try deep-link params: ?book=Иоанн&ch=1
+    // Try deep-link params: ?book=Бытие&ch=1
     const params = new URLSearchParams(location.search);
     const b = params.get('book');
     const ch = params.get('ch');
@@ -79,7 +79,7 @@ function loadChapters() {
   const chapterSelect = document.getElementById("chapterSelect");
   chapterSelect.innerHTML = "";
   const chapters = Object.keys(bibleData[currentBook] || {});
-  chapters.sort((a,b)=>Number(a)-Number(b));
+  chapters.sort((a, b) => Number(a) - Number(b)); // Теперь числовая сортировка работает
   chapters.forEach(ch => {
     const opt = document.createElement("option");
     opt.value = ch;
@@ -94,13 +94,13 @@ function loadChapters() {
 function displayChapter() {
   const textDiv = document.getElementById("text");
   textDiv.innerHTML = "";
-  const verses = (bibleData[currentBook]||{})[currentChapter] || [];
+  const verses = (bibleData[currentBook] || {})[currentChapter] || [];
   verses.forEach((v, i) => {
     const p = document.createElement("p");
     p.className = "verse";
     const num = document.createElement("span");
     num.className = "num";
-    num.textContent = (i+1) + ".";
+    num.textContent = (i + 1) + ".";
     const span = document.createElement("span");
     span.textContent = " " + v;
     p.appendChild(num);
@@ -108,8 +108,11 @@ function displayChapter() {
     textDiv.appendChild(p);
   });
 
-  // update nav buttons disabled state
-  const chapters = Object.keys(bibleData[currentBook] || {}).sort((a,b)=>Number(a)-Number(b));
+  // Scroll to top
+  textDiv.scrollTop = 0;
+
+  // Update nav buttons disabled state
+  const chapters = Object.keys(bibleData[currentBook] || {}).sort((a, b) => Number(a) - Number(b));
   const idx = chapters.indexOf(String(currentChapter));
   document.getElementById("prevChapter").disabled = (idx <= 0);
   document.getElementById("nextChapter").disabled = (idx === -1 || idx >= chapters.length - 1);
@@ -126,7 +129,7 @@ document.getElementById("chapterSelect").addEventListener("change", e => {
 });
 
 document.getElementById("prevChapter").addEventListener("click", () => {
-  const chapters = Object.keys(bibleData[currentBook] || {}).sort((a,b)=>Number(a)-Number(b));
+  const chapters = Object.keys(bibleData[currentBook] || {}).sort((a, b) => Number(a) - Number(b));
   const idx = chapters.indexOf(String(currentChapter));
   if (idx > 0) {
     currentChapter = chapters[idx - 1];
@@ -136,7 +139,7 @@ document.getElementById("prevChapter").addEventListener("click", () => {
 });
 
 document.getElementById("nextChapter").addEventListener("click", () => {
-  const chapters = Object.keys(bibleData[currentBook] || {}).sort((a,b)=>Number(a)-Number(b));
+  const chapters = Object.keys(bibleData[currentBook] || {}).sort((a, b) => Number(a) - Number(b));
   const idx = chapters.indexOf(String(currentChapter));
   if (idx !== -1 && idx < chapters.length - 1) {
     currentChapter = chapters[idx + 1];
